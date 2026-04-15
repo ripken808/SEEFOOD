@@ -1,0 +1,112 @@
+/* ── API Key Section ── */
+.apikey-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.apikey-card {
+  width: 100%;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.apikey-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+
+.apikey-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.apikey-desc {
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.apikey-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.apikey-input {
+  flex: 1;
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.apikey-input:focus {
+  border-color: var(--seefood-red);
+}
+
+.apikey-input::placeholder {
+  color: var(--text-light);
+}
+
+.apikey-save-btn {
+  background: var(--seefood-red);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.2s;
+}
+
+.apikey-save-btn:hover:not(:disabled) {
+  background: var(--seefood-red-dark);
+  transform: scale(1.03);
+}
+
+.apikey-save-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.apikey-extra {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+
+.apikey-link {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.apikey-link:hover {
+  color: var(--text-dark);
+}
+
+.apikey-link-danger:hover {
+  color: var(--seefood-red);
+}

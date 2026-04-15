@@ -1,0 +1,185 @@
+/* ── Live Camera (fills app-main) ── */
+.live-camera {
+  flex: 1;
+  position: relative;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.live-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.live-video.visible {
+  opacity: 1;
+}
+
+/* ── Flash ── */
+.live-flash {
+  position: absolute;
+  inset: 0;
+  background: white;
+  animation: flashPop 0.2s ease-out forwards;
+  z-index: 10;
+}
+
+@keyframes flashPop {
+  0%   { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+/* ── Viewfinder Corners ── */
+.live-viewfinder {
+  position: absolute;
+  inset: 18%;
+  pointer-events: none;
+}
+
+.vf {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: rgba(255, 255, 255, 0.6);
+  border-style: solid;
+  border-width: 0;
+}
+
+.vf-tl { top: 0; left: 0; border-top-width: 2px; border-left-width: 2px; }
+.vf-tr { top: 0; right: 0; border-top-width: 2px; border-right-width: 2px; }
+.vf-bl { bottom: 0; left: 0; border-bottom-width: 2px; border-left-width: 2px; }
+.vf-br { bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; }
+
+/* ── Controls Bar ── */
+.live-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 24px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+}
+
+/* Shutter */
+.live-shutter {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid white;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: transform 0.15s;
+}
+
+.live-shutter:hover:not(:disabled) {
+  transform: scale(1.08);
+}
+
+.live-shutter:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.live-shutter:disabled {
+  opacity: 0.3;
+}
+
+.shutter-ring {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: white;
+  display: block;
+}
+
+.live-shutter:active:not(:disabled) .shutter-ring {
+  background: var(--seefood-red);
+}
+
+/* Side buttons */
+.live-ctrl-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+}
+
+.live-ctrl-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Error State ── */
+.live-camera-error {
+  text-align: center;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.live-error-icon {
+  font-size: 44px;
+  opacity: 0.5;
+}
+
+.live-camera-error p {
+  font-size: 14px;
+  color: #999;
+  max-width: 260px;
+  line-height: 1.6;
+}
+
+.live-back-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ── Loading Dots ── */
+.live-loading {
+  position: absolute;
+  display: flex;
+  gap: 8px;
+}
+
+.live-loading-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+  animation: camDot 1.2s ease-in-out infinite;
+}
+
+.d2 { animation-delay: 0.2s; }
+.d3 { animation-delay: 0.4s; }
+
+@keyframes camDot {
+  0%, 80%, 100% { transform: scale(0.5); opacity: 0.3; }
+  40% { transform: scale(1); opacity: 1; }
+}
