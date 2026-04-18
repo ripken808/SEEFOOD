@@ -1,4 +1,4 @@
-/* ── Classic iPhone Frame (iPhone 6/7/8 style) ── */
+/* ── Classic iPhone Frame ── */
 .phone-frame {
   position: relative;
   width: var(--phone-width);
@@ -16,7 +16,12 @@
   flex-direction: column;
 }
 
-/* ── Top Bezel — Speaker + Camera ── */
+/* When evaluating/result, bezels are hidden and app fills the frame */
+.phone-frame.phone-fullscreen .app {
+  border-radius: calc(var(--bezel-radius) - 3px);
+}
+
+/* ── Top Bezel ── */
 .phone-top-bezel {
   height: 70px;
   background: #1c1c1c;
@@ -45,7 +50,7 @@
   border: 2px solid #222;
 }
 
-/* ── Bottom Bezel — Home Button ── */
+/* ── Bottom Bezel ── */
 .phone-bottom-bezel {
   height: 74px;
   background: #1c1c1c;
@@ -64,7 +69,7 @@
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-/* ── App Inside Frame ── */
+/* ── App ── */
 .app {
   flex: 1;
   display: flex;
@@ -94,33 +99,16 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  animation: slideDown 0.3s ease-out;
 }
 
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ── Responsive: on actual phones, remove the frame ── */
+/* ── Responsive ── */
 @media (max-width: 440px) {
   :root {
     --phone-width: 100vw;
     --phone-height: 100dvh;
     --bezel-radius: 0;
   }
-
-  #root {
-    padding: 0;
-  }
-
-  .phone-frame {
-    box-shadow: none;
-    border: none;
-  }
-
-  .phone-top-bezel,
-  .phone-bottom-bezel {
-    display: none;
-  }
+  #root { padding: 0; }
+  .phone-frame { box-shadow: none; border: none; }
+  .phone-top-bezel, .phone-bottom-bezel { display: none; }
 }

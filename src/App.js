@@ -12,8 +12,12 @@ function App() {
   const { modelReady, loadingProgress, classify } = useClassifier();
   const [image, setImage] = useState(null);
   const [result, setResult] = useState(null);
-  const [appState, setAppState] = useState("idle"); // idle | preview | camera | evaluating | result
+  const [appState, setAppState] = useState("idle");
   const [error, setError] = useState(null);
+
+  // Fullscreen states hide the bezels and header
+  const isFullscreen =
+    appState === "evaluating" || appState === "result" || appState === "camera";
 
   const handleImageSelect = useCallback((file) => {
     const preview = URL.createObjectURL(file);
@@ -32,9 +36,7 @@ function App() {
       setError(null);
 
       try {
-        // Start a minimum delay so the evaluating screen feels dramatic
         const minDelay = new Promise((r) => setTimeout(r, 2500));
-
         const imgEl = new Image();
         imgEl.crossOrigin = "anonymous";
         await new Promise((resolve, reject) => {
@@ -43,7 +45,6 @@ function App() {
           imgEl.src = url;
         });
 
-        // Run classification and minimum delay in parallel
         const [{ isHotdog }] = await Promise.all([classify(imgEl), minDelay]);
         setResult({ isHotdog });
         setAppState("result");
@@ -77,31 +78,29 @@ function App() {
   }, [image]);
 
   return (
-    <div className="phone-frame">
-      {/* Top bezel — speaker + front camera */}
-      <div className="phone-top-bezel">
-        <div className="phone-speaker" />
-        <div className="phone-front-camera" />
-      </div>
+    <div className={`phone-frame ${isFullscreen ? "phone-fullscreen" : ""}`}>
+      {/* Bezels — hidden during fullscreen states */}
+      {!isFullscreen && (
+        <div className="phone-top-bezel">
+          <div className="phone-speaker" />
+          <div className="phone-front-camera" />
+        </div>
+      )}
 
       <div className="app">
-        {/* Header always visible except in camera mode */}
-        {appState !== "camera" && <Header />}
+        {/* Header — only visible in idle/preview */}
+        {!isFullscreen && <Header />}
 
         <main className="app-main">
-          {/* Model loading */}
           {!modelReady && <ModelLoader message={loadingProgress} />}
 
-          {/* Idle or Preview */}
           {modelReady && (appState === "idle" || appState === "preview") && (
             <>
               <ImageCapture
                 onImageSelect={handleImageSelect}
-                onCameraCapture={handleCameraCapture}
                 onOpenLiveCamera={() => setAppState("camera")}
                 preview={image?.preview}
                 onClassify={() => classifyImage()}
-                appState={appState}
               />
               {error && (
                 <div className="error-banner">
@@ -111,7 +110,6 @@ function App() {
             </>
           )}
 
-          {/* Live Camera */}
           {modelReady && appState === "camera" && (
             <LiveCamera
               onCapture={handleCameraCapture}
@@ -119,12 +117,10 @@ function App() {
             />
           )}
 
-          {/* Evaluating */}
           {appState === "evaluating" && image && (
             <Evaluating preview={image.preview} />
           )}
 
-          {/* Result */}
           {appState === "result" && image && result && (
             <Result
               preview={image.preview}
@@ -135,10 +131,11 @@ function App() {
         </main>
       </div>
 
-      {/* Bottom bezel — home button */}
-      <div className="phone-bottom-bezel">
-        <div className="phone-home-button" />
-      </div>
+      {!isFullscreen && (
+        <div className="phone-bottom-bezel">
+          <div className="phone-home-button" />
+        </div>
+      )}
     </div>
   );
 }

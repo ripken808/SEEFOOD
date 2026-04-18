@@ -1,14 +1,33 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
-// Hotdog-related class names in MobileNet/ImageNet
-const HOTDOG_LABELS = ["hotdog", "hot dog", "hot_dog", "red hot"];
+const HOTDOG_LABELS = [
+  "hotdog",
+  "hot dog",
+  "hot_dog",
+  "red hot",
+  "frankfurter",
+  "frank",
+  "wiener",
+  "weiner",
+  "vienna sausage",
+  "sausage",
+  "bratwurst",
+  "brat",
+  "chili dog",
+  "corn dog",
+  "knackwurst",
+  "knockwurst",
+  "polish sausage",
+  "link",
+];
+
+const EXCLUDE_LABELS = ["banana", "burrito", "pretzel"];
 
 export function useClassifier() {
   const [modelReady, setModelReady] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState("Loading AI model...");
   const modelRef = useRef(null);
 
-  // Load MobileNet on mount
   useEffect(() => {
     let cancelled = false;
 
@@ -16,8 +35,6 @@ export function useClassifier() {
       try {
         setLoadingProgress("Loading TensorFlow.js...");
 
-        // Dynamically import tf and mobilenet from CDN-loaded globals
-        // They're loaded via script tags in index.html
         const waitForTf = () =>
           new Promise((resolve) => {
             const check = () => {
@@ -28,14 +45,10 @@ export function useClassifier() {
           });
 
         await waitForTf();
-
         if (cancelled) return;
-        setLoadingProgress("Downloading MobileNet (~16MB)...");
 
-        const model = await window.mobilenet.load({
-          version: 2,
-          alpha: 1.0,
-        });
+        setLoadingProgress("Downloading MobileNet (~16MB)...");
+        const model = await window.mobilenet.load({ version: 2, alpha: 1.0 });
 
         if (cancelled) return;
         modelRef.current = model;
@@ -56,18 +69,22 @@ export function useClassifier() {
   const classify = useCallback(async (imgElement) => {
     if (!modelRef.current) throw new Error("Model not loaded");
 
-    // MobileNet returns top 5 predictions
-    const predictions = await modelRef.current.classify(imgElement, 5);
+    const predictions = await modelRef.current.classify(imgElement, 10);
 
-    // Check if any prediction contains a hotdog-related label
-    const isHotdog = predictions.some((p) =>
-      HOTDOG_LABELS.some((label) => p.className.toLowerCase().includes(label)),
+    console.log(
+      "🌭 SeeFood predictions:",
+      predictions.map(
+        (p) => `${p.className}: ${(p.probability * 100).toFixed(1)}%`,
+      ),
     );
 
-    return {
-      isHotdog,
-      predictions, // for debugging if needed
-    };
+    const isHotdog = predictions.some((p) => {
+      const name = p.className.toLowerCase();
+      if (EXCLUDE_LABELS.some((ex) => name.includes(ex))) return false;
+      return HOTDOG_LABELS.some((label) => name.includes(label));
+    });
+
+    return { isHotdog, predictions };
   }, []);
 
   return { modelReady, loadingProgress, classify };

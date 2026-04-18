@@ -1,143 +1,97 @@
-/* ── Capture Section ── */
-.capture-section {
+.capture {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.hidden-input {
-  display: none;
-}
-
-/* ── Idle State ── */
+/* ── Idle ── */
 .capture-idle {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 16px 16px;
-  gap: 10px;
+  padding: 16px;
+  gap: 12px;
 }
 
-.capture-dropzone {
+.capture-center {
   flex: 1;
-  min-height: 180px;
-  border: 2.5px dashed #ccc;
-  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  border: 2.5px dashed #d0d0d0;
+  border-radius: 16px;
   cursor: pointer;
-  transition: all 0.25s;
   background: #fafafa;
+  transition: all 0.2s;
 }
 
-.capture-dropzone:hover {
+.capture-center:hover {
   border-color: var(--seefood-red);
   background: #fff5f5;
 }
 
-.capture-dropzone.drag-over {
-  border-color: var(--seefood-red);
-  background: #ffebee;
-  border-style: solid;
-  transform: scale(1.01);
+.capture-emoji {
+  font-size: 52px;
 }
 
-.dropzone-icon {
-  font-size: 48px;
-}
-
-.dropzone-title {
+.capture-title {
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 600;
   color: var(--text-dark);
 }
 
-.dropzone-sub {
-  font-size: 12px;
+.capture-sub {
+  font-size: 13px;
   color: var(--text-light);
 }
 
-/* ── Capture Buttons ── */
-.capture-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.capture-btn {
-  flex: 1;
-  padding: 12px;
+.capture-camera-btn {
+  width: 100%;
+  padding: 14px;
   border: none;
-  border-radius: 10px;
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.2s;
-}
-
-.capture-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.capture-btn:active {
-  transform: scale(0.98);
-}
-
-.capture-btn-primary {
+  border-radius: 12px;
   background: var(--seefood-red);
   color: white;
+  font-family: var(--font-display);
   font-size: 16px;
-  padding: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s;
 }
 
-.capture-btn-camera {
-  background: #f5f5f5;
-  color: var(--text-dark);
-  border: 1px solid #e0e0e0;
-}
+.capture-camera-btn:hover { transform: scale(1.02); }
+.capture-camera-btn:active { transform: scale(0.98); }
 
-.capture-btn-upload {
-  background: #f5f5f5;
-  color: var(--text-dark);
-  border: 1px solid #e0e0e0;
-}
-
-/* ── Preview State ── */
-.capture-preview {
+/* ── Has Image ── */
+.capture-has-image {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.preview-frame {
+.capture-img-wrap {
   flex: 1;
-  position: relative;
   overflow: hidden;
 }
 
-.preview-img {
+.capture-img {
   width: 100%;
   height: 100%;
-  min-height: 220px;
-  max-height: 45vh;
   object-fit: cover;
   display: block;
 }
 
-.preview-actions {
-  padding: 14px 16px;
+.capture-actions {
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.evaluate-btn {
+.capture-go-btn {
   width: 100%;
   padding: 14px;
   border: none;
@@ -149,29 +103,16 @@
   font-weight: 600;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: transform 0.15s, background 0.2s;
   box-shadow: 0 4px 16px rgba(229, 57, 53, 0.3);
 }
 
-.evaluate-btn:hover {
-  background: var(--seefood-red-dark);
-  transform: scale(1.02);
-}
-
-.retake-btn {
+.capture-change-btn {
   width: 100%;
   padding: 10px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   background: transparent;
   color: var(--text-mid);
-  font-family: var(--font-body);
   font-size: 13px;
   cursor: pointer;
-  transition: all 0.2s;
-}
-
-.retake-btn:hover {
-  border-color: var(--text-mid);
-  color: var(--text-dark);
 }

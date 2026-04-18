@@ -1,71 +1,81 @@
 # 🌭 SeeFood — Not Hotdog
 
-> *"What would you say if I told you there is an app on the market that tells you if you have a hotdog or not a hotdog?"*
+> _"What would you say if I told you there is an app on the market that tells you if you have a hotdog or not a hotdog?"_
 > — Jian-Yang, Silicon Valley S4E4
 
-The only food identification app that matters. A faithful recreation of the legendary SeeFood app from HBO's **Silicon Valley**.
+A faithful recreation of the legendary SeeFood app from HBO's **Silicon Valley**. Displayed inside a classic iPhone frame, powered by TensorFlow.js — runs entirely in your browser with zero setup.
 
-Upload or snap a photo and this app will tell you one of two things:
-- **Hotdog** ✅ (green banner, checkmark)
-- **Not Hotdog** ❌ (red banner, X)
+## ✅ Hotdog &nbsp;&nbsp; ❌ Not Hotdog
 
 That's it. That's the app.
 
 ---
 
+## Live Demo
+
+**[ripken808.github.io/SEEFOOD](https://ripken808.github.io/SEEFOOD)**
+
+---
+
+## Features
+
+- **AI-powered classification** — MobileNet v2 running in-browser via TensorFlow.js
+- **No API key required** — completely free, no accounts, no backend
+- **Live camera** — point your webcam/phone camera at food in real-time
+- **Classic iPhone frame** — displayed inside an iPhone 6/7/8 style bezel
+- **Show-accurate UI** — red SEEFOOD banner, circle dot spinner, green/red verdict banners
+- **Dramatic evaluating screen** — 2.5 second minimum reveal with "Evaluating..." spinner
+
 ## Tech Stack
 
-- **React 18** — UI framework
-- **Claude Vision API** (Anthropic) — Image classification
-- **Zero backend** — API calls happen client-side
+- **React 18**
+- **TensorFlow.js** + **MobileNet v2** (loaded via CDN, ~16MB cached after first visit)
+- **Zero backend** — everything runs client-side
 
 ## Getting Started
 
 ```bash
-# Install dependencies
 npm install
-
-# Start the dev server
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000). First visit downloads the AI model (~16MB), then it's cached.
 
-You'll be prompted for your Anthropic API key on first visit. The key is stored in your browser's localStorage and only sent directly to the Anthropic API.
+## Deploy to GitHub Pages
+
+```bash
+npm run deploy
+```
+
+Then go to your repo **Settings → Pages → Source** and select the `gh-pages` branch.
 
 ## How It Works
 
-1. User uploads or takes a photo of food (or anything, really)
-2. Full-screen "Evaluating..." with the show's circle dot spinner
-3. Verdict: Green "Hotdog" banner at top or Red "Not hotdog" banner at bottom
-4. Tap anywhere to try again
+1. Upload a photo (tap the dropzone) or use the live camera
+2. "Evaluating..." with the show's circle dot spinner
+3. **Hotdog** → green banner + checkmark at top
+4. **Not hotdog** → red banner + X at bottom
+5. Tap to try again
 
 ## Project Structure
 
 ```
 seefood/
-├── public/
-│   └── index.html
+├── public/index.html
 ├── src/
+│   ├── hooks/useClassifier.js    # MobileNet classification hook
 │   ├── components/
-│   │   ├── ApiKeyInput.js / .css
-│   │   ├── Evaluating.js / .css
-│   │   ├── Header.js / .css
-│   │   ├── ImageCapture.js / .css
-│   │   └── Result.js / .css
-│   ├── App.js / .css
-│   ├── index.js
-│   └── index.css
-├── package.json
-└── README.md
+│   │   ├── Header.js             # Red SEEFOOD banner
+│   │   ├── ModelLoader.js        # Loading screen
+│   │   ├── ImageCapture.js       # Upload dropzone
+│   │   ├── LiveCamera.js         # getUserMedia camera feed
+│   │   ├── Evaluating.js         # Spinner screen
+│   │   └── Result.js             # Hotdog / Not Hotdog verdict
+│   ├── App.js                    # State machine + iPhone frame
+│   └── index.js
+└── package.json
 ```
-
-## Phases
-
-- [x] **Phase 1** — Core MVP (upload + classify + result)
-- [x] **Phase 2** — Show-accurate UI (SeeFood branding, evaluating spinner, green/red verdict banners, camera capture)
-- [ ] **Phase 3** — Personality, scan history, deployment
 
 ---
 
-*SeeFood Technologies — "It's not a 'not hotdog' app. It's much more than that."*
+_SeeFood Technologies — "The Shazam for Food"_

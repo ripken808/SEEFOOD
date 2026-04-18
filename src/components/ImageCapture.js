@@ -1,27 +1,18 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import "./ImageCapture.css";
 
 function ImageCapture({
   onImageSelect,
-  onCameraCapture,
   onOpenLiveCamera,
   preview,
   onClassify,
-  appState,
 }) {
   const inputRef = useRef(null);
-  const [dragOver, setDragOver] = useState(false);
 
   const handleFile = (file) => {
     if (file && file.type.startsWith("image/")) {
       onImageSelect(file);
     }
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setDragOver(false);
-    handleFile(e.dataTransfer.files[0]);
   };
 
   // Global paste
@@ -42,62 +33,53 @@ function ImageCapture({
   }, [onImageSelect]);
 
   return (
-    <div className="capture-section">
+    <div className="capture">
       {!preview ? (
+        /* ── Idle: upload prompt ── */
         <div className="capture-idle">
           <div
-            className={`capture-dropzone ${dragOver ? "drag-over" : ""}`}
+            className="capture-center"
             onClick={() => inputRef.current?.click()}
-            onDrop={handleDrop}
-            onDragOver={(e) => {
-              e.preventDefault();
-              setDragOver(true);
-            }}
-            onDragLeave={() => setDragOver(false)}
           >
-            <div className="dropzone-icon">🌭</div>
-            <p className="dropzone-title">What are you eating?</p>
-            <p className="dropzone-sub">Drop a photo or tap to upload</p>
+            <span className="capture-emoji">🌭</span>
+            <p className="capture-title">What are you eating?</p>
+            <p className="capture-sub">Tap to upload a photo</p>
           </div>
 
-          <div className="capture-buttons">
-            <button
-              className="capture-btn capture-btn-primary"
-              onClick={onOpenLiveCamera}
-            >
-              📹 Live Camera
-            </button>
-          </div>
+          <button className="capture-camera-btn" onClick={onOpenLiveCamera}>
+            📹 Live Camera
+          </button>
 
           <input
             ref={inputRef}
             type="file"
             accept="image/*"
-            className="hidden-input"
+            style={{ display: "none" }}
             onChange={(e) => handleFile(e.target.files[0])}
           />
         </div>
       ) : (
-        <div className="capture-preview">
-          <div className="preview-frame">
-            <img src={preview} alt="Food to evaluate" className="preview-img" />
+        /* ── Preview: show image + classify ── */
+        <div className="capture-has-image">
+          <div className="capture-img-wrap">
+            <img src={preview} alt="Food" className="capture-img" />
           </div>
-          <div className="preview-actions">
-            <button className="evaluate-btn" onClick={onClassify}>
-              Let's Eat Started
+          <div className="capture-actions">
+            <button className="capture-go-btn" onClick={onClassify}>
+              Evaluate
             </button>
             <button
-              className="retake-btn"
+              className="capture-change-btn"
               onClick={() => inputRef.current?.click()}
             >
-              Choose Different Photo
+              Change photo
             </button>
           </div>
           <input
             ref={inputRef}
             type="file"
             accept="image/*"
-            className="hidden-input"
+            style={{ display: "none" }}
             onChange={(e) => handleFile(e.target.files[0])}
           />
         </div>

@@ -2,7 +2,7 @@
 
 ---
 
-## Prompts 1–10 (summarized)
+## Prompts 1–12 (summarized)
 
 1. Initial scope + Phase 1 MVP
 2. Phase 2 first pass — camera, animations
@@ -12,69 +12,48 @@
 6. Where to find Anthropic API key
 7. Switched to TensorFlow.js MobileNet (free)
 8. iPhone frame, inline results
-9. Classic iPhone frame, live camera via getUserMedia
+9. Classic iPhone frame, live camera
 10. 2.5s minimum evaluating delay
+11. Removed Take Photo + Upload buttons
+12. Git push + .gitignore for node_modules
 
 ---
 
-## Prompt 11
+## Prompt 13
 
-**Date:** 2026-04-15
+**Date:** 2026-04-17
 
 **Prompt:**
 
-> [Screenshot of three buttons] get rid of the extra two buttons at the bottom since i can just click on the center area to add a photo
+> [Screenshot of half-eaten hotdog classified as "Not hotdog"]
+> I used an actual image of a half eaten hotdog that I took and it was not able to detect it
 
-**Effectiveness:** ✅ High — Clear, one-line request
+**Effectiveness:** ✅ High — Real-world testing revealing a real limitation
 
 **What was delivered:**
 
-- Removed "📷 Take Photo" and "🖼 Upload" buttons
-- Removed unused cameraRef and native camera input
-- Kept only "📹 Live Camera" button + the dropzone (tap to upload)
+- Expanded HOTDOG_LABELS from 4 to 17 terms: now includes frankfurter, wiener, sausage, bratwurst, corn dog, knackwurst, polish sausage, link, etc.
+- Added EXCLUDE_LABELS to prevent false positives (banana, burrito, pretzel)
+- Increased predictions from top 5 to top 10 for better coverage
+- Added console.log debug output so you can open browser DevTools and see exactly what MobileNet thinks the image is
+- Added exclusion logic so sausage-adjacent but non-hotdog items don't false-positive
+
+**Note:** MobileNet is a general image classifier trained on stock photos — it will always struggle with unusual angles, partial food, wrapping/paper, dark lighting, etc. If accuracy on real-world photos becomes important, switching back to Claude Vision API (or another vision LLM) would be dramatically more accurate. For a gimmick resume project though, this expanded label set should catch most cases.
 
 **Files:**
 
 ```
-src/components/ImageCapture.js    ← REPLACE
+src/hooks/useClassifier.js    ← REPLACE
 ```
 
 ---
 
 ## Reconstruction Prompt
 
-> Reconstruct the "SeeFood" project — a faithful recreation of the Not Hotdog app from HBO's Silicon Valley, displayed inside a classic iPhone (6/7/8 style) frame. React web app, TensorFlow.js MobileNet classification, no API key.
+> Reconstruct the "SeeFood" project — Silicon Valley Not Hotdog app recreation inside a classic iPhone frame. React 18, TensorFlow.js MobileNet v2, no API key.
 >
-> **Tech stack:** React 18 (create-react-app), no backend. TF.js + MobileNet v2 via CDN.
+> **Key detail for classifier:** useClassifier.js checks top 10 predictions (not 5) against expanded HOTDOG_LABELS: hotdog, hot dog, hot_dog, red hot, frankfurter, frank, wiener, weiner, vienna sausage, sausage, bratwurst, brat, chili dog, corn dog, knackwurst, knockwurst, polish sausage, link. Has EXCLUDE_LABELS (banana, burrito, pretzel) to prevent false positives. Logs predictions to console for debugging. 2.5s minimum eval delay in App.js.
 >
-> **Design:** Classic iPhone frame centered on dark background. All states inline.
->
-> **Structure:**
->
-> ```
-> seefood/
-> ├── public/index.html (Oswald + Source Sans 3, TF.js + MobileNet CDN)
-> ├── src/
-> │   ├── index.js, index.css (dark bg, phone vars)
-> │   ├── App.js (classic bezels, states: idle/preview/camera/evaluating/result, 2.5s min eval delay)
-> │   ├── App.css (bezels, home button, responsive)
-> │   ├── hooks/useClassifier.js (MobileNet v2, hotdog labels)
-> │   ├── components/
-> │   │   ├── Header.js/.css (Red "SEEFOOD" + tagline)
-> │   │   ├── ModelLoader.js/.css (Bouncing 🌭, progress bar)
-> │   │   ├── ImageCapture.js/.css (Dropzone tap-to-upload + "📹 Live Camera" button only. NO Take Photo or Upload buttons. Paste listener. Preview: image + "Let's Eat Started" + "Choose Different Photo".)
-> │   │   ├── LiveCamera.js/.css (getUserMedia, shutter, flip, viewfinder)
-> │   │   ├── Evaluating.js/.css (Inline, spinner, "Evaluating...")
-> │   │   └── Result.js/.css (Inline, green/red banners, tap reset)
-> │   └── assets/ (empty)
-> ├── package.json (seefood, react 18.2)
-> └── README.md
-> ```
->
-> **Classification:** MobileNet v2 via TF.js CDN. Labels: hotdog, hot dog, hot_dog, red hot. 2.5s minimum eval delay.
->
-> **Phase status:** Phase 1 ✅. Phase 2 ✅. Phase 3 NOT started.
->
-> **Logging:** Append PROMPT_LOG.md after each prompt. Individual replacement files.
+> **Full structure:** [same as previous reconstruction prompt]
 >
 > Regenerate all files.
