@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/SEEFOOD/static/css/main.79c5efd3.css",
+    "main.js": "/SEEFOOD/static/js/main.97289089.js",
+    "index.html": "/SEEFOOD/index.html",
+    "main.79c5efd3.css.map": "/SEEFOOD/static/css/main.79c5efd3.css.map",
+    "main.97289089.js.map": "/SEEFOOD/static/js/main.97289089.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.79c5efd3.css",
+    "static/js/main.97289089.js"
+  ]
+}
