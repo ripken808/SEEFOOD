@@ -88,6 +88,7 @@
   flex-direction: column;
   overflow: hidden;
   min-height: 0;
+  height: 0; /* forces flex children to respect parent bounds */
 }
 
 /* ── Error Banner ── */

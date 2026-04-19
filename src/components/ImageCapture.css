@@ -2,6 +2,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* ── Idle ── */
@@ -11,6 +13,7 @@
   flex-direction: column;
   padding: 16px;
   gap: 12px;
+  min-height: 0;
 }
 
 .capture-center {
@@ -25,6 +28,7 @@
   cursor: pointer;
   background: #fafafa;
   transition: all 0.2s;
+  min-height: 0;
 }
 
 .capture-center:hover {
@@ -32,9 +36,7 @@
   background: #fff5f5;
 }
 
-.capture-emoji {
-  font-size: 52px;
-}
+.capture-emoji { font-size: 52px; }
 
 .capture-title {
   font-family: var(--font-display);
@@ -59,7 +61,7 @@
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.15s;
+  flex-shrink: 0;
 }
 
 .capture-camera-btn:hover { transform: scale(1.02); }
@@ -71,8 +73,10 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow: hidden;
 }
 
+/* Image area: takes all remaining space, never overflows */
 .capture-img-wrap {
   flex: 1;
   position: relative;
@@ -90,12 +94,14 @@
   display: block;
 }
 
+/* Buttons: fixed height, never pushed off screen */
 .capture-actions {
-  padding: 12px 16px;
+  padding: 12px 16px 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   flex-shrink: 0;
+  background: white;
 }
 
 .capture-go-btn {
@@ -111,6 +117,7 @@
   letter-spacing: 1px;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(229, 57, 53, 0.3);
+  flex-shrink: 0;
 }
 
 .capture-change-btn {
@@ -122,4 +129,5 @@
   color: var(--text-mid);
   font-size: 13px;
   cursor: pointer;
+  flex-shrink: 0;
 }
