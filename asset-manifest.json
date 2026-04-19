@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/SEEFOOD/static/css/main.21cede5d.css",
+    "main.css": "/SEEFOOD/static/css/main.1fdda1bd.css",
     "main.js": "/SEEFOOD/static/js/main.97289089.js",
     "index.html": "/SEEFOOD/index.html",
-    "main.21cede5d.css.map": "/SEEFOOD/static/css/main.21cede5d.css.map",
+    "main.1fdda1bd.css.map": "/SEEFOOD/static/css/main.1fdda1bd.css.map",
     "main.97289089.js.map": "/SEEFOOD/static/js/main.97289089.js.map"
   },
   "entrypoints": [
-    "static/css/main.21cede5d.css",
+    "static/css/main.1fdda1bd.css",
     "static/js/main.97289089.js"
   ]
 }
