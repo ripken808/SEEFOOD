@@ -1,7 +1,7 @@
-/* ── Result — fills phone screen, no header ── */
+/* ── Result — absolute fill of app-main ── */
 .res-screen {
-  flex: 1;
-  position: relative;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
   cursor: pointer;
   background: #000;

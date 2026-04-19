@@ -1,74 +1,64 @@
-/* ── Evaluating Screen (inline, not fullscreen) ── */
-.evaluating-screen {
-  flex: 1;
-  position: relative;
+/* ── Evaluating — absolute fill of app-main ── */
+.eval-screen {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  animation: evalFadeIn 0.4s ease-out;
+  background: #000;
 }
 
-@keyframes evalFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.evaluating-bg {
+.eval-bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
-.evaluating-overlay {
+.eval-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.35);
 }
 
-.evaluating-content {
+.eval-content {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
 }
 
-/* ── Circle Dot Spinner ── */
-.spinner-circle {
-  width: 120px;
-  height: 120px;
+/* ── Spinner ── */
+.eval-spinner {
+  width: 140px;
+  height: 140px;
 }
 
-.spinner-svg {
+.eval-spinner-svg {
   width: 100%;
   height: 100%;
-  animation: spinnerRotate 1.8s linear infinite;
+  animation: evalSpin 1.4s linear infinite;
 }
 
-@keyframes spinnerRotate {
+@keyframes evalSpin {
   to { transform: rotate(360deg); }
 }
 
-.spinner-dot {
-  fill: #e57373;
-  opacity: 0.25;
-  animation: dotPulse 1s ease-in-out infinite alternate;
-}
-
-@keyframes dotPulse {
-  0%   { opacity: 0.2; r: 3.5; }
-  100% { opacity: 1; r: 5; }
-}
-
-.evaluating-text {
+/* ── "Evaluating..." text ── */
+.eval-text {
   font-family: var(--font-display);
-  font-size: 36px;
+  font-size: 40px;
   font-weight: 700;
   color: white;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   letter-spacing: 1px;
+  -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.6);
+  text-shadow:
+    2px 2px 0 rgba(0, 0, 0, 0.5),
+    -1px -1px 0 rgba(0, 0, 0, 0.3),
+    0 3px 8px rgba(0, 0, 0, 0.4);
 }

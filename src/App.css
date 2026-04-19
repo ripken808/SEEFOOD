@@ -16,7 +16,6 @@
   flex-direction: column;
 }
 
-/* When evaluating/result, bezels are hidden and app fills the frame */
 .phone-frame.phone-fullscreen .app {
   border-radius: calc(var(--bezel-radius) - 3px);
 }
@@ -77,14 +76,18 @@
   background: var(--bg-white);
   overflow: hidden;
   position: relative;
+  min-height: 0;
 }
 
+/* app-main uses position:relative + flex:1 so children
+   can use position:absolute inset:0 to truly fill it */
 .app-main {
   flex: 1;
+  position: relative;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
+  min-height: 0;
 }
 
 /* ── Error Banner ── */
