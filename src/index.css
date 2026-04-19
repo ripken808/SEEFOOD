@@ -16,9 +16,9 @@
   --radius: 0px;
   --spinner-dot: #e57373;
 
-  /* Classic iPhone dimensions */
-  --phone-width: 375px;
-  --phone-height: 812px;
+  /* Phone scales to fit within the viewport */
+  --phone-width: min(375px, 90vw);
+  --phone-height: min(812px, 92vh, calc(var(--phone-width) * 2.165));
   --bezel-radius: 44px;
 }
 
@@ -34,15 +34,15 @@ body {
   color: var(--text-dark);
   min-height: 100vh;
   min-height: 100dvh;
-  overflow-x: hidden;
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 #root {
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 16px;
+  padding: 16px;
 }
